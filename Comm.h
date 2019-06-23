@@ -14,10 +14,10 @@ struct Config {
   char ssid[64];
   char psk[64];
 
-  int motorPwmFreq;           //default: 1024*0.4, min value: 0, max value: 1024
-  int motorPwmPin;            //default: D1
-  int motorPwmDirection;      //default: 0
-  int motorPwmDirectionPin;   //default: D2
+  int motorPwmFreqVal;          //default: 1024*0.4, min value: 0, max value: 1024
+  int motorPwmFreqPin;          //default: D1
+  int motorPwmDirectVal;        //default: 0
+  int motorPwmDirectPin;        //default: D2
 
 };
 

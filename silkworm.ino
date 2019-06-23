@@ -41,7 +41,13 @@ void setup(void) {
   jsonConfig.loadConfiguration(config);
   
   webServer.begin();
-  pwmMotor.begin(config.motorPwmPin, config.motorPwmFreq);
+
+  //pwmMotor.begin(config.motorPwmFreqPin, config.motorPwmFreqVal);
+  pwmMotor.motorPwmFreqPin = config.motorPwmFreqPin;
+  pwmMotor.motorPwmFreqVal = config.motorPwmFreqVal;
+  pwmMotor.motorPwmDirectVal = config.motorPwmDirectVal;
+  pwmMotor.motorPwmDirectPin = config.motorPwmDirectPin;
+  pwmMotor.begin();
 
   digitalWrite(LED_BUILTIN, LOW);
 }

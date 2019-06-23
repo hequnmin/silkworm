@@ -24,11 +24,11 @@ void JsonConfig::initConfiguration(Config &config) {
   strMac.toCharArray(config.mac, sizeof(config.mac));
 
   config.port = 80;
-  config.motorPwmFreq = 1024 * 0.4;
-  config.motorPwmPin = D1;
+  config.motorPwmFreqVal = 1024 * 0.4;
+  config.motorPwmFreqPin = D1;
 
-  config.motorPwmDirection = 0;
-  config.motorPwmDirectionPin = D2;
+  config.motorPwmDirectVal = 0;
+  config.motorPwmDirectPin = D2;
   
   return;
 }
@@ -76,20 +76,20 @@ void JsonConfig::loadConfiguration(Config &config) {
     strlcpy(config.mac, doc["mac"], sizeof(config.mac));
   }
 
-  if (doc.containsKey("motorPwmFreq")) {
-    config.motorPwmFreq = doc["motorPwmFreq"];
+  if (doc.containsKey("motorPwmFreqVal")) {
+    config.motorPwmFreqVal = doc["motorPwmFreqVal"];
   }
   
-  if (doc.containsKey("motorPwmPin")) {
-    config.motorPwmPin = doc["motorPwmPin"];
+  if (doc.containsKey("motorPwmFreqPin")) {
+    config.motorPwmFreqPin = doc["motorPwmFreqPin"];
   }
 
-  if (doc.containsKey("motorPwmDirection")) {
-    config.motorPwmDirection = doc["motorPwmDirection"];
+  if (doc.containsKey("motorPwmDirectVal")) {
+    config.motorPwmDirectVal = doc["motorPwmDirectVal"];
   }
 
-  if (doc.containsKey("motorPwmDirectionPin")) {
-    config.motorPwmDirectionPin = doc["motorPwmDirectionPin"];
+  if (doc.containsKey("motorPwmDirectPin")) {
+    config.motorPwmDirectPin = doc["motorPwmDirectPin"];
   }
 
   file.close();
@@ -113,10 +113,10 @@ void JsonConfig::saveConfiguration(Config &config) {
   doc["chip"] = config.chip;
   doc["mac"] = config.mac;
   doc["port"] = config.port;
-  doc["motorPwmFreq"] = config.motorPwmFreq;
-  doc["motorPwmPin"] = config.motorPwmPin;
-  doc["motorPwmDirection"] = config.motorPwmDirection;
-  doc["motorPwmDirectionPin"] = config.motorPwmDirectionPin;
+  doc["motorPwmFreqVal"] = config.motorPwmFreqVal;
+  doc["motorPwmFreqPin"] = config.motorPwmFreqPin;
+  doc["motorPwmDirectVal"] = config.motorPwmDirectVal;
+  doc["motorPwmDirectPin"] = config.motorPwmDirectPin;
 
   // Serialize JSON to file
   if (serializeJson(doc, file) == 0) {
@@ -142,6 +142,7 @@ String JsonConfig::readConfiguration() {
       file.close();
     }
     return configJson;
+
 }
 
 // Prints the content of a file to the Serial

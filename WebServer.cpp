@@ -12,10 +12,10 @@
 #include <ESP8266mDNS.h>
 
 #ifndef STASSID
-//#define STASSID "iHome"
-//#define STAPSK  "Welcome2Home"
-#define STASSID "Blueway-VIP"
-#define STAPSK  "blueway456"
+#define STASSID "iHome"
+#define STAPSK  "Welcome2Home"
+//#define STASSID "Blueway-VIP"
+//#define STAPSK  "blueway456"
 #endif
 
 using namespace std;
@@ -112,24 +112,24 @@ void WebServer::handleRoot() {
 
   bool exist = SPIFFS.exists("/dashboard.html");
 
-  String motorPwmFreqTag = "$MOTOR_PWM_FREQ$";
-  String motorPwmPinTag = "$MOTOR_PWM_PIN$";
-  String motorPwmDirectionTag = "$MOTOR_PWM_DIRECTION$";
-  String motorPwmDirectionPinTag = "$MOTOR_PWM_DIRECTION_PIN$";
+  String motorPwmFreqValTag = "$MOTOR_PWM_FREQ_VAL$";
+  String motorPwmFreqPinTag = "$MOTOR_PWM_FREQ_PIN$";
+  String motorPwmDirectValTag = "$MOTOR_PWM_DIRECT_VAL$";
+  String motorPwmDirectPinTag = "$MOTOR_PWM_DIRECT_PIN$";
   
   if (exist) {
     Serial.println("/dashboard.html is exists.");
     File file = SPIFFS.open("/dashboard.html", "r");
     String response = file.readString();
 
-    response.replace(motorPwmFreqTag, String(config.motorPwmFreq));
-    response.replace(motorPwmPinTag, String(config.motorPwmPin));
-    if (config.motorPwmDirection == 1) {
-      response.replace(motorPwmDirectionTag, "checked");
+    response.replace(motorPwmFreqValTag, String(config.motorPwmFreqVal));
+    response.replace(motorPwmFreqPinTag, String(config.motorPwmFreqPin));
+    if (config.motorPwmDirectVal == 1) {
+      response.replace(motorPwmDirectValTag, "checked");
     } else {
-      response.replace(motorPwmDirectionTag, "");
+      response.replace(motorPwmDirectValTag, "");
     }
-    response.replace(motorPwmDirectionPinTag, String(config.motorPwmDirectionPin));
+    response.replace(motorPwmDirectPinTag, String(config.motorPwmDirectPin));
     
     
     server.send(200, "text/html", response);
@@ -298,15 +298,21 @@ void WebServer::handleConfig() {
       server.send(200, "text/json", "{\"errorcode\":1, \"errorinfo\": \"invalid request.\"}");
       return;      
     } else {
-      if (object.containsKey("motorPwmFreq")) config.motorPwmFreq = object["motorPwmFreq"];
-      if (object.containsKey("motorPwmPin")) config.motorPwmPin = object["motorPwmPin"];
-      if (object.containsKey("motorPwmDirection")) config.motorPwmDirection = object["motorPwmDirection"];
-      if (object.containsKey("motorPwmDirectionPin")) config.motorPwmDirectionPin = object["motorPwmDirectionPin"];
+      if (object.containsKey("motorPwmFreqVal")) config.motorPwmFreqVal = object["motorPwmFreqVal"];
+      if (object.containsKey("motorPwmFreqPin")) config.motorPwmFreqPin = object["motorPwmFreqPin"];
+      if (object.containsKey("motorPwmDirectVal")) config.motorPwmDirectVal = object["motorPwmDirectVal"];
+      if (object.containsKey("motorPwmDirectPin")) config.motorPwmDirectPin = object["motorPwmDirectPin"];
 
       jsonConfig.saveConfiguration(config);
-      
-      pwmMotor.begin(config.motorPwmPin, config.motorPwmFreq);
-      
+
+      // Motor
+      //pwmMotor.begin(config.motorPwmFreqPin, config.motorPwmFreqVal);
+      pwmMotor.motorPwmFreqPin = config.motorPwmFreqPin;
+      pwmMotor.motorPwmFreqVal = config.motorPwmFreqVal;
+      pwmMotor.motorPwmDirectVal = config.motorPwmDirectVal;
+      pwmMotor.motorPwmDirectPin = config.motorPwmDirectPin;
+      pwmMotor.begin();
+     
       server.send(200, "text/json", "{\"errorcode\":0}");
       return;    
     }

@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <title>Silkworm Cloud</title>
 
-    <!-- Bootstrap 3.3.7 -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <!--JQuery 1.12.4-->
-    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!--bootstrap-slider-->
-    <link href="//cdn.bootcss.com/bootstrap-slider/9.4.1/css/bootstrap-slider.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/bootstrap-slider/9.4.1/bootstrap-slider.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap-slider/9.4.1/css/bootstrap-slider.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap-slider/9.4.1/bootstrap-slider.min.js"></script>
 
     <!--bootstrap-switch-->
     <link href="https://cdn.bootcss.com/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
@@ -49,24 +49,24 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 col-xs-6 text-right">
-                            <label for="motorPwmFreq">Motor PWM</label>
+                            <label for="motorPwmFreqVal">Motor PWM</label>
                         </div>
                         <div class="col-md-3 col-xs-6">
                             <input type="text"
                                    class="sliderbar"
-                                   id="motorPwmFreq"
-                                   name="motorPwmFreq"
+                                   id="motorPwmFreqVal"
+                                   name="motorPwmFreqVal"
                                    data-slider-id="sliderbarSlider"
                                    data-slider-min="0"
                                    data-slider-max="1000"
                                    data-slider-step="10"
-                                   data-slider-value="$MOTOR_PWM_FREQ$"/>
+                                   data-slider-value="$MOTOR_PWM_FREQ_VAL$"/>
                         </div>
                         <div class="col-md-1 col-xs-6 text-right">
-                            <label for="motorPwmPin">Out Pin</label>
+                            <label for="motorPwmFreqPin">Out Pin</label>
                         </div>
                         <div class="col-md-2 col-xs-6">
-                            <input type="text" class="form-control" id="motorPwmPin" name="motorPwmPin" value="$MOTOR_PWM_PIN$">
+                            <input type="text" class="form-control" id="motorPwmFreqPin" name="motorPwmFreqPin" value="$MOTOR_PWM_FREQ_PIN$">
                         </div>
                     </div>
                 </div>
@@ -77,15 +77,15 @@
                         </div>
                         <div class="col-md-3 col-xs-6">
                             <div class="switch">
-                                <input type="checkbox" id="motorPwmDirection" name="motorPwmDirection" $MOTOR_PWM_DIRECTION$ />
+                                <input type="checkbox" id="motorPwmDirectVal" name="motorPwmDirectVal" $MOTOR_PWM_DIRECT_VAL$ />
                             </div>
                         </div>
 
                         <div class="col-md-1 col-xs-6 text-right">
-                            <label for="motorPwmDirectionPin">Out Pin</label>
+                            <label for="motorPwmDirectPin">Out Pin</label>
                         </div>
                         <div class="col-md-2 col-xs-6">
-                            <input type="text" class="form-control" id="motorPwmDirectionPin" name="motorPwmDirectionPin" value="$MOTOR_PWM_DIRECTION_PIN$">
+                            <input type="text" class="form-control" id="motorPwmDirectPin" name="motorPwmDirectPin" value="$MOTOR_PWM_DIRECT_PIN$">
                         </div>
                     </div>
                 </div>
@@ -160,21 +160,21 @@
           return 'Current value: ' + value;
         }
     });
-    $("[name='motorPwmDirection']").bootstrapSwitch();
+    $("[name='motorPwmDirectVal']").bootstrapSwitch();
 
     $(function(){
         //输入框的值改变时触发
-        $("#motorPwmFreq").on("change",function(e){
+        $("#motorPwmFreqVal").on("change",function(e){
             //获取input输入的值
             console.log(e);
-            $.post("/config", "{motorPwmFreq:" + e.target.value + "}",
+            $.post("/config", "{motorPwmFreqVal:" + e.target.value + "}",
                 function(data,status){
                   console.log("数据：" + data + "\n状态：" + status);
                 }
             );
         });
-        $("#motorPwmPin").on("change",function(e){
-            $.post("/config", "{motorPwmPin:" + e.target.value +"}",
+        $("#motorPwmFreqPin").on("change",function(e){
+            $.post("/config", "{motorPwmFreqPin:" + e.target.value +"}",
               function(data,status){
                 console.log("数据：" + data + "\n状态：" + status);
               }
