@@ -132,46 +132,17 @@ void JsonConfig::saveConfiguration(Config &config) {
 }
 
 //读取config文件
-String JsonConfig::readConfiguration(Config &config) {
-  String configJson = "";
-
-  StaticJsonDocument<256> doc;
-
-  doc["version"] = config.version;
-  doc["hostname"] = config.hostname;
-  doc["chip"] = config.chip;
-  doc["mac"] = config.mac;
-  doc["port"] = config.port;
-  doc["motorPwmFreq"] = config.motorPwmFreq;
-  doc["motorPwmPin"] = config.motorPwmPin;
-
-  if (serializeJson(doc, configJson) == 0) {
-    Serial.println(F("Failed to write to String"));
-  }
-
-  return configJson;
+String JsonConfig::readConfiguration() {
+    String configJson = "";
+    if (SPIFFS.exists(configFilename)) {
+      File file = SPIFFS.open(configFilename, "r");
+      if (file) {
+        configJson = file.readString();
+      }
+      file.close();
+    }
+    return configJson;
 }
-
-////读取config文件
-//void JsonConfig::serialConfiguration(Config &config) {
-//
-//  StaticJsonDocument<256> doc;
-//
-//  doc["version"] = config.version;
-//  doc["hostname"] = config.hostname;
-//  doc["chip"] = config.chip;
-//  doc["mac"] = config.mac;
-//  doc["port"] = config.port;
-//  doc["motorPwmFreq"] = config.motorPwmFreq;
-//  doc["motorPwmPin"] = config.motorPwmPin;
-//
-//  if (serializeJson(doc, Serial) == 0) {
-//    Serial.println(F("Failed to write to String"));
-//  }
-//  Serial.println();
-//  return ;
-//}
-
 
 // Prints the content of a file to the Serial
 void JsonConfig::printFile() {

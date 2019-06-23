@@ -49,7 +49,5 @@ void setup(void) {
 void loop(void) {
   
   webServer.handleClient();   //处理客户端请求
-  
-//  jsonConfig.serialConfiguration(config);
-  //delay(1000);
+
 }

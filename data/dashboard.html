@@ -73,19 +73,19 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 col-xs-6 text-right">
-                            <label>Reverse</label>
+                            <label>Direction</label>
                         </div>
                         <div class="col-md-3 col-xs-6">
                             <div class="switch">
-                                <input type="checkbox" name="REVERSE" checked />
+                                <input type="checkbox" id="motorPwmDirection" name="motorPwmDirection" $MOTOR_PWM_DIRECTION$ />
                             </div>
                         </div>
 
                         <div class="col-md-1 col-xs-6 text-right">
-                            <label for="reversePin">Out Pin</label>
+                            <label for="motorPwmDirectionPin">Out Pin</label>
                         </div>
                         <div class="col-md-2 col-xs-6">
-                            <input type="text" class="form-control" id="reversePin" name="REVERSEPIN" value="$REVERSEPIN$">
+                            <input type="text" class="form-control" id="motorPwmDirectionPin" name="motorPwmDirectionPin" value="$MOTOR_PWM_DIRECTION_PIN$">
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@
           return 'Current value: ' + value;
         }
     });
-    $("[name='REVERSE']").bootstrapSwitch();
+    $("[name='motorPwmDirection']").bootstrapSwitch();
 
     $(function(){
         //输入框的值改变时触发

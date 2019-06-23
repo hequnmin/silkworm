@@ -20,7 +20,7 @@ class JsonConfig {
     void saveConfiguration(Config &config);
     void printFile();
 
-    String readConfiguration(Config &config);
+    String readConfiguration();
     void serialConfiguration(Config &config);
 };
 

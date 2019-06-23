@@ -114,6 +114,8 @@ void WebServer::handleRoot() {
 
   String motorPwmFreqTag = "$MOTOR_PWM_FREQ$";
   String motorPwmPinTag = "$MOTOR_PWM_PIN$";
+  String motorPwmDirectionTag = "$MOTOR_PWM_DIRECTION$";
+  String motorPwmDirectionPinTag = "$MOTOR_PWM_DIRECTION_PIN$";
   
   if (exist) {
     Serial.println("/dashboard.html is exists.");
@@ -122,6 +124,13 @@ void WebServer::handleRoot() {
 
     response.replace(motorPwmFreqTag, String(config.motorPwmFreq));
     response.replace(motorPwmPinTag, String(config.motorPwmPin));
+    if (config.motorPwmDirection == 1) {
+      response.replace(motorPwmDirectionTag, "checked");
+    } else {
+      response.replace(motorPwmDirectionTag, "");
+    }
+    response.replace(motorPwmDirectionPinTag, String(config.motorPwmDirectionPin));
+    
     
     server.send(200, "text/html", response);
     file.close();
@@ -264,7 +273,7 @@ void WebServer::handleConfig() {
 
   // 接收GET请求
   if (server.method() == HTTP_GET) {
-    String response = jsonConfig.readConfiguration(config);
+    String response = jsonConfig.readConfiguration();
     server.send(200, "text/json", response);
     return;
   }
@@ -291,6 +300,8 @@ void WebServer::handleConfig() {
     } else {
       if (object.containsKey("motorPwmFreq")) config.motorPwmFreq = object["motorPwmFreq"];
       if (object.containsKey("motorPwmPin")) config.motorPwmPin = object["motorPwmPin"];
+      if (object.containsKey("motorPwmDirection")) config.motorPwmDirection = object["motorPwmDirection"];
+      if (object.containsKey("motorPwmDirectionPin")) config.motorPwmDirectionPin = object["motorPwmDirectionPin"];
 
       jsonConfig.saveConfiguration(config);
       
