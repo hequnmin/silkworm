@@ -1,6 +1,0 @@
-{
-    "terminal.integrated.env.osx": {
-        "PATH": "/Users/minsmac/.platformio/penv/bin:/Users/minsmac/.platformio/penv:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/minsmac/.rvm/gems/ruby-2.2.7/bin:/Users/minsmac/.rvm/gems/ruby-2.2.7@global/bin:/Users/minsmac/.rvm/rubies/ruby-2.2.7/bin:/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:.:/Users/minsmac/.rvm/bin",
-        "PLATFORMIO_CALLER": "vscode"
-    }
-}
